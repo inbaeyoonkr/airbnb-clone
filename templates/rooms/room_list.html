@@ -6,8 +6,12 @@ Home
 
 {% block content %}
 
-    {% for room in object_list %}
-        <h1>{{room.name}} / {{room.price}}</h1>
+    {% for room in rooms %}
+        <h4>
+            <a href="{% url "rooms:detail" room.pk %}">
+                {{room.name}} / {{room.price}}
+            </a>
+        </h4>
     {% endfor %}
     
     <h5>
@@ -21,6 +25,6 @@ Home
         <a href="?page={{page_obj.next_page_number}}">Next</a>
     {% endif %}
     </h5>
-
+    <h1>{{now}}</h1>
 {% endblock content %}
 
