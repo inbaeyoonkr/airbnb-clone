@@ -18,4 +18,17 @@
     <h5>{{room.name}}</h5>
 {% endfor %}
 
+{% if rooms %}
+<h5>
+{% if rooms.has_previous %}
+    <a href="{{current_path}}&page={{rooms.previous_page_number}}">Previous</a>
+{% endif %}
+page {{rooms.number}} of {{rooms.paginator.num_pages}}
+{% if rooms.has_next %}
+    <a href="{{current_path}}&page={{rooms.next_page_number}}">Next</a>
+{% endif %}
+</h5>
+{% endif %}
+
+
 {% endblock content %}
