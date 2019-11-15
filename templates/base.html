@@ -7,8 +7,19 @@
     <title>{% block page_title %}{% endblock page_title %}| Nbnb</title>
 </head>
 <body>
-    {% include "partials/header.html" %}
-    {% block content %}{% endblock content %}
+    <header>
+    {% include "partials/nav.html" %}
+
+    {% block search-bar %}
+    <form method="get" action="{% url "rooms:search" %}">
+        <input name="city" placeholder="Search by City"/>
+    </form>
+    {% endblock search-bar %}
+    </header>
+
+    {% block content %}
+    {% endblock content %}
+
     {% include "partials/footer.html" %}
 </body>
 </html>
