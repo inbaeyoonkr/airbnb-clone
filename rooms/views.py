@@ -89,13 +89,19 @@ def search(request):
     if baths != 0:
         filter_args["baths__gte"] = baths
 
-    print(bool(instant), bool(superhost))
-
     if instant is True:
         filter_args["instant_book"] = True
 
     if superhost is True:
         filter_args["host__superhost"] = True
+
+    if len(s_amenities) > 0:
+        for s_amenity in s_amenities:
+            filter_args["amenities__pk"] = int(s_amenity)
+
+    if len(s_facilities) > 0:
+        for s_facility in s_facilities:
+            filter_args["facilities__pk"] = int(s_facility)
 
     rooms = models.Room.objects.filter(**filter_args)
 
