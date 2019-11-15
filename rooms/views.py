@@ -1,6 +1,4 @@
 from django.shortcuts import render, redirect
-from django.http import Http404
-from django.urls import reverse
 from django.views.generic import ListView, DetailView
 from . import models
 
@@ -20,3 +18,9 @@ class RoomDetailView(DetailView):
     """ RoomDetailView Definition """
 
     model = models.Room
+
+
+def search(request):
+    city = request.GET.get("city")
+    city = str.capitalize(city)
+    return render(request, "rooms/search.html", context={"city": city})
