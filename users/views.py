@@ -171,13 +171,13 @@ def kakao_callback(request):
             headers={"Authorization": f"Bearer {access_token}"},
         )
         profile_json = profile_request.json()
-        email = profile_json.get("email", None)
-        if email is None:
-            raise KakaoException()
-        kakao_account = profile_json.get("kakao_account")
-        properties = kakao_account.get("properties")
+        properties = profile_json.get("properties")
         nickname = properties.get("nickname")
         profile_image = properties.get("profile_image")
+        kakao_account = profile_json.get("kakao_account")
+        email = kakao_account.get("email", None)
+        if email is None:
+            raise KakaoException()
         try:
             user = models.User.objects.get(email=email)
             if user.login_method != models.User.LOGIN_KAKAO:
@@ -192,7 +192,6 @@ def kakao_callback(request):
             )
             user.set_unusable_password()
             user.save()
-
         login(request, user)
         return redirect(reverse("core:home"))
     except KakaoException:
