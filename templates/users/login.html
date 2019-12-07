@@ -12,9 +12,14 @@ Log In
         {% include "partials/social_login.html" %}
             
         <form method="post" action="{% url "users:login" %}" class="w-full">
-            {% csrf_token %} 
-            {{form.email}}
-            {{form.password}}
+            {% csrf_token %}
+            <div class="input">
+                {{form.email}}
+            </div>
+             
+            <div class="input">
+                {{form.password}}
+            </div>
             <button class="btn bg-red-500 text-white">Login</button>
         </form>
 
