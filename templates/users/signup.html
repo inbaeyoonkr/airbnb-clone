@@ -14,9 +14,10 @@ Sign Up
             {% csrf_token %} 
             {{form.first_name}}
             {{form.last_name}}
+            {{form.email.errors}}
             {{form.email}}
+            {{form.password}}
             {{form.password1}}
-            {{form.password2}}
             <button class="btn bg-red-500 text-white">Sign Up</button>
         </form>
 

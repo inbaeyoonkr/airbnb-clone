@@ -24,7 +24,7 @@ class LoginForm(forms.Form):
             raise forms.ValidationError("User does not exist")
 
 
-class SignUpForm(UserCreationForm):
+class SignUpForm(forms.ModelForm):
     """ SignUp Form Definition """
 
     class Meta:
@@ -36,25 +36,35 @@ class SignUpForm(UserCreationForm):
             "email": forms.EmailInput(attrs={"placeholder": "Email"}),
         }
 
-    password1 = forms.CharField(
+    password = forms.CharField(
         widget=forms.PasswordInput(attrs={"placeholder": "Password"})
     )
-    password2 = forms.CharField(
+    password1 = forms.CharField(
         widget=forms.PasswordInput(attrs={"placeholder": "Password Confirm"})
     )
 
-    def clean_password2(self):
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        try:
+            models.User.objects.get(email=email)
+            raise forms.ValidationError(
+                "That email is already taken", code="existing_user"
+            )
+        except models.User.DoesNotExist:
+            return email
+
+    def clean_password1(self):
+        password = self.cleaned_data.get("password")
         password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
+        if password and password1 and password != password1:
             raise forms.ValidationError("Password confirmation does not match")
-        return password2
+        return password
 
     def save(self, *args, **kwargs):
         print(self.cleaned_data)
         user = super().save(commit=False)
         email = self.cleaned_data.get("email")
-        password = self.cleaned_data.get("password1")
+        password = self.cleaned_data.get("password")
         user.username = email
         user.set_password(password)
         user.save()
