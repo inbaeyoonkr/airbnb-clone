@@ -13,13 +13,16 @@ Log In
             
         <form method="post" action="{% url "users:login" %}" class="w-full">
             {% csrf_token %}
-            <div class="input">
-                {{form.email}}
-            </div>
-             
-            <div class="input">
-                {{form.password}}
-            </div>
+            
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <span class="text-red-700 text-sm font-medium">{{error}}</span>
+                {% endfor %}
+            {% endif %}
+
+            {% for field in form %}
+                {% include "partials/form_input.html" with field=field %}
+            {% endfor %}
             <button class="btn bg-red-500 text-white">Login</button>
         </form>
 
