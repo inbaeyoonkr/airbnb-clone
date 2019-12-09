@@ -5,6 +5,7 @@ from django.shortcuts import redirect, reverse
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.core.files.base import ContentFile
+from django.contrib import messages
 from . import forms, models
 
 
@@ -150,6 +151,7 @@ def kakao_callback(request):
     """ Kakao Callback View Definition """
 
     try:
+        raise KakaoException()
         code = request.GET.get("code")
         client_id = os.environ.get("K_KEY")
         redirect_uri = "http://127.0.0.1:8000/users/login/kakao/callback"
@@ -196,4 +198,5 @@ def kakao_callback(request):
         login(request, user)
         return redirect(reverse("core:home"))
     except KakaoException:
+        messages.error(request, "Something went wrong")
         return redirect(reverse("users:login"))
