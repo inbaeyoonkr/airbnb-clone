@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.core.files.base import ContentFile
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from . import forms, models
 
 
@@ -217,7 +218,7 @@ class UserProfileView(DetailView):
     template_name = "users/user_detail.html"
 
 
-class UpdateProfileView(UpdateView):
+class UpdateProfileView(SuccessMessageMixin, UpdateView):
     """ Udpate User Profile View Definition """
 
     model = models.User
@@ -231,6 +232,7 @@ class UpdateProfileView(UpdateView):
         "language",
         "currency",
     )
+    success_message = "Profile Updated"
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -244,10 +246,11 @@ class UpdateProfileView(UpdateView):
         return form
 
 
-class UpdatePasswordView(PasswordChangeView):
+class UpdatePasswordView(SuccessMessageMixin, PasswordChangeView):
     """ Update Password View Definition """
 
     template_name = "users/update-password.html"
+    success_message = "Password Updated"
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class=form_class)
