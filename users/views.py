@@ -1,6 +1,7 @@
 import os
 import requests
 from django.views.generic import FormView, DetailView, UpdateView
+from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import redirect, reverse
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
@@ -222,10 +223,8 @@ class UpdateProfileView(UpdateView):
     model = models.User
     template_name = "users/update-profile.html"
     fields = (
-        "email",
         "first_name",
         "last_name",
-        "avatar",
         "gender",
         "bio",
         "birthdate",
@@ -236,10 +235,8 @@ class UpdateProfileView(UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
-    def form_valid(self, form):
-        """If the form is valid, save the associated model."""
-        email = form.cleaned_data.get("email")
-        self.object.username = email
-        self.object.save()
-        return super().form_valid(form)
 
+class UpdatePasswordView(PasswordChangeView):
+    """ Update Password View Definition """
+
+    template_name = "users/update-password.html"
