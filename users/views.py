@@ -253,7 +253,10 @@ class UpdateProfileView(mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView
 
 
 class UpdatePasswordView(
-    mixins.LoggedInOnlyView, SuccessMessageMixin, PasswordChangeView
+    mixins.LoggedInOnlyView,
+    mixins.EmailLogInOnlyView,
+    SuccessMessageMixin,
+    PasswordChangeView,
 ):
     """ Update Password View Definition """
 
