@@ -218,7 +218,7 @@ class UserProfileView(DetailView):
     template_name = "users/user_detail.html"
 
 
-class UpdateProfileView(SuccessMessageMixin, UpdateView):
+class UpdateProfileView(mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView):
     """ Udpate User Profile View Definition """
 
     model = models.User
@@ -246,7 +246,9 @@ class UpdateProfileView(SuccessMessageMixin, UpdateView):
         return form
 
 
-class UpdatePasswordView(SuccessMessageMixin, PasswordChangeView):
+class UpdatePasswordView(
+    mixins.LoggedInOnlyView, SuccessMessageMixin, PasswordChangeView
+):
     """ Update Password View Definition """
 
     template_name = "users/update-password.html"
