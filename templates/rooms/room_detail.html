@@ -104,11 +104,11 @@
                                     {% is_booked room day as is_booked_bool %}
                                     {% if day.number != 0 %}
                                         {% if day.past %}
-                                            <span class="bg-gray-100 w-full text-center p-1 rounded text-gray-500">{{day}}</span></span>
+                                            <span class="bg-gray-100 w-full text-center p-1 rounded text-gray-500">{{day}}</span>
                                         {% elif is_booked_bool %}
-                                             <span class="bg-gray-100 w-full text-center p-1 rounded text-gray-500 line-through">{{day}}</span></span>
+                                             <span class="bg-gray-100 w-full text-center p-1 rounded text-gray-500 line-through">{{day}}</span>
                                         {% else %}
-                                            <span class="bg-gray-200 w-full text-center p-1 rounded hover:bg-teal-400 hover:text-white cursor-pointer">{{day}}</span></span>
+                                            <a href="{% url 'reservations:create' room.pk day.year day.month day.number %}" class="bg-gray-200 w-full text-center p-1 rounded hover:bg-teal-400 hover:text-white cursor-pointer">{{day}}</a>
                                         {% endif %}
                                     {% else %}
                                         <span></span>
