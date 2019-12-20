@@ -141,3 +141,6 @@ EMAIL_PORT = os.environ.get("MAILGUN_PORT")
 EMAIL_HOST_USER = os.environ.get("MAILGUN_USERNAME")
 EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASSWORD")
 EMAIL_FROM = "Ian@sandbox11d492805361432d8ee7ce8eef46788b.mailgun.org"
+
+# Locale
+LOCALE_PATH = (os.path.join(BASE_DIR, "locale"),)
