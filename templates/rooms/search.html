@@ -8,27 +8,34 @@
 {% endblock search-bar %}
 
 {% block content %}
-<h2>Searching by {{city}}</h2>
-<form method="get" action="{% url "rooms:search" %}">
-    {{form.as_p}}
-    <button>Search</button>
-</form>
-<h3>Results</h3>
-{% for room in rooms %}
-    <h5>{{room.name}}</h5>
-{% endfor %}
 
-{% if rooms %}
-<h5>
-{% if rooms.has_previous %}
-    <a href="{{current_path}}&page={{rooms.previous_page_number}}">Previous</a>
-{% endif %}
-page {{rooms.number}} of {{rooms.paginator.num_pages}}
-{% if rooms.has_next %}
-    <a href="{{current_path}}&page={{rooms.next_page_number}}">Next</a>
-{% endif %}
-</h5>
-{% endif %}
+<div class="container mx-auto">
+    <h2 class="text-lg text-center font-bold">Searching by {{city}}</h2>
 
+    <form method="get" action="{% url "rooms:search" %}">
+        {{form.as_p}}
+        <button class='btn-link mt-5'>Search</button>         
+    </form>
+    <div class="bg-gray-600 h-px my-5"></div>
+    <h3 class="text-lg text-center font-bold">Results</h3>
+    <div class="flex flex-wrap" >
+        {% for room in rooms %}
+            {% include "mixins/room_card.html" with room=room %}
+        {% endfor %}
+    </div>
+    {% if rooms %}
+    <h5>
+    <div class="text-lg font-medium text-center mb-10 text-teal-600">
+    {% if rooms.has_previous %}
+        <a href="{{current_path}}&page={{rooms.previous_page_number}}">Previous</a>
+    {% endif %}
+    <span class="mx-5">page {{rooms.number}} of {{rooms.paginator.num_pages}}</span>
+    {% if rooms.has_next %}
+        <a href="{{current_path}}&page={{rooms.next_page_number}}">Next</a>
+    {% endif %}
+    </h5>
+    {% endif %}
+    </div>
+</div>
 
 {% endblock content %}

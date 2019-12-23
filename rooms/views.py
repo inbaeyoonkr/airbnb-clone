@@ -31,8 +31,8 @@ class SearchView(View):
 
     def get(self, request):
         country = request.GET.get("country")
-
-        if country:
+        city = request.GET.get("city")
+        if city:
             form = forms.SearchForm(request.GET)
             if form.is_valid():
                 city = form.cleaned_data.get("city")
@@ -90,7 +90,7 @@ class SearchView(View):
                 print(filter_args)
 
                 qs = models.Room.objects.filter(**filter_args).order_by("-created")
-                paginator = Paginator(qs, 10, orphans=5)
+                paginator = Paginator(qs, 12, orphans=5)
                 page = request.GET.get("page", 1)
                 rooms = paginator.get_page(page)
 
