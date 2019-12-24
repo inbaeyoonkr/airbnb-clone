@@ -12,17 +12,82 @@
 <div class="container mx-auto">
     <h2 class="text-lg text-center font-bold">Searching by {{city}}</h2>
 
-    <form method="get" action="{% url "rooms:search" %}">
-        {{form.as_p}}
+    <form method="get" action="{% url "rooms:search" %}" class="w-full mt-10">
+        <div class="flex flex-wrap justify-between">
+            <div class="mt-4">            
+                <span class="text-center w-full block mb-px font-medium text-lg">{{form.city.label}}</span>
+                    {{form.city}}
+            </div class="mt-4">
+            <div class="mt-4">
+                <span class="text-center w-full block mb-px font-medium text-lg">{{form.country.label}}</span>
+                    {{form.country}}
+            </div>
+            <div class="mt-4">
+                <span class="text-center w-full block mb-px font-medium text-lg">{{form.price.label}}</span>
+                    {{form.price}}
+            </div>
+            <div class="mt-4">
+                <span class="text-center w-full block mb-px font-medium text-lg">{{form.room_type.label}}</span>
+                    {{form.room_type}}
+            </div>
+            <div class="mt-4">
+                <span class="text-center w-full block mb-px font-medium text-lg">{{form.guests.label}}</span>
+                    {{form.guests}}
+            </div>
+            <div class="mt-4">
+                <span class="text-center w-full block mb-px font-medium text-lg">{{form.bedrooms.label}}</span>
+                    {{form.bedrooms}}
+            </div>
+            <div class="mt-4">
+                <span class="text-center w-full block mb-px font-medium text-lg">{{form.beds.label}}</span>
+                    {{form.beds}}
+            </div>
+            <div class="mt-4">
+                <span class="text-center w-full block mb-px font-medium text-lg">{{form.baths.label}}</span>
+                    {{form.baths}}
+            </div>
+            <div class="mt-4">
+                <span class="text-center w-full block mb-px font-medium text-lg">{{form.instant_book.label}}</span>
+                    {{form.instant_book}}
+            </div>
+            <div class="mt-4">
+                <span class="text-center w-full block mb-px font-medium text-lg">{{form.superhost.label}}</span>
+                    {{form.superhost}}
+            </div>
+        </div>
+        <div class>
+            <span class="text-lg font-medium block w-full text-center mt-10 mb-5">Amenities</span>
+            <div class="flex flex-wrap w-full justify-between">
+            {% for a in form.amenities %}
+                <div class="w-56 text-center border border-gray-500 rounded-lg mb-px text-sm font-medium">
+                    {{a}}
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+        <div class>
+            <span class="text-lg font-medium block w-full text-center mt-10 mb-5">Facilities</span>
+            <div class="flex flex-wrap w-full justify-between">
+            {% for f in form.facilities %}
+                <div class="w-56 text-center border border-gray-500 rounded-lg mb-px text-sm font-medium">
+                    {{f}}
+                </div>
+            {% endfor %}
+            </div>
+        </div>
         <button class='btn-link mt-5'>Search</button>         
     </form>
+
     <div class="bg-gray-600 h-px my-5"></div>
+    
     <h3 class="text-lg text-center font-bold">Results</h3>
+    
     <div class="flex flex-wrap" >
         {% for room in rooms %}
             {% include "mixins/room_card.html" with room=room %}
         {% endfor %}
     </div>
+    
     {% if rooms %}
     <h5>
     <div class="text-lg font-medium text-center mb-10 text-teal-600">

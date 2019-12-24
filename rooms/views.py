@@ -31,9 +31,10 @@ class SearchView(View):
 
     def get(self, request):
         country = request.GET.get("country")
-        city = request.GET.get("city")
-        if city:
+
+        if country:
             form = forms.SearchForm(request.GET)
+
             if form.is_valid():
                 city = form.cleaned_data.get("city")
                 country = form.cleaned_data.get("country")
@@ -94,8 +95,6 @@ class SearchView(View):
                 page = request.GET.get("page", 1)
                 rooms = paginator.get_page(page)
 
-                print(dir(rooms))
-                print(dir(rooms.paginator))
                 return render(
                     request,
                     "rooms/search.html",

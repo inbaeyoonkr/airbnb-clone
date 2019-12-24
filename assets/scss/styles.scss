@@ -101,4 +101,17 @@ form {
   justify-items: center;
 }
 
+#id_city,
+#id_price,
+#id_room_type,
+#id_guests,
+#id_bedrooms,
+#id_beds,
+#id_baths,
+#id_instant_book,
+#id_superhost {
+  height: 50px;
+  border-radius: 0.275rem;
+}
+
 @tailwind utilities;
