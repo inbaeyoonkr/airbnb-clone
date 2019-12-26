@@ -2,9 +2,9 @@ import os
 import requests
 from django.utils import translation
 from django.http import HttpResponse
-from django.views.generic import FormView, DetailView, UpdateView
+from django.views.generic import FormView, DetailView, UpdateView, ListView
 from django.contrib.auth.views import PasswordChangeView
-from django.shortcuts import redirect, reverse
+from django.shortcuts import redirect, reverse, render
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.core.files.base import ContentFile
@@ -12,6 +12,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from . import forms, models, mixins
+from rooms import models as room_models
+from reservations import models as reservation_models
 
 
 class LoginView(mixins.LoggedOutOnlyView, FormView):
@@ -298,3 +300,58 @@ def switch_language(request):
     if lang is not None:
         request.session[translation.LANGUAGE_SESSION_KEY] = lang
     return HttpResponse(status=200)
+
+
+class SeeReservationsView(ListView):
+    """ See Reservations View Definition """
+
+    user = models.User
+    template_name = "reservations/reservation_list.html"
+    def get(self, *args, **kwargs):
+        user = self.request.user
+        reservations = reservation_models.Reservation.objects.filter(guest__pk=user.pk)
+        if not reservations.count() == 0:
+            return render(
+                self.request,
+                "reservations/reservation_list.html",
+                context={
+                    "reservations": reservations,
+                    "exist": True,
+                    "cur_page": "reservations",
+                },
+            )
+        else:
+            return render(
+                self.request,
+                "reservations/reservation_list.html",
+                context={"exist": False, "cur_page": "reservations"},
+            )
+
+
+class SeeHostRoomsReservations(ListView):
+    """ See Host Rooms Reservations View Definition """
+
+    model = models.User
+    template_name = "reservations/reservation_list.html"
+
+    def get(self, *args, **kwargs):
+        host = self.request.user
+        reservations = reservation_models.Reservation.objects.filter(
+            room__host__pk=host.pk
+        )
+        if not reservations.count() == 0:
+            return render(
+                self.request,
+                "reservations/reservation_list.html",
+                context={
+                    "reservations": reservations,
+                    "exist": True,
+                    "cur_page": "reservations-host",
+                },
+            )
+        else:
+            return render(
+                self.request,
+                "reservations/reservation_list.html",
+                context={"exist": False, "cur_page": "reservations-host"},
+            )

@@ -29,7 +29,7 @@
                 No Messages
             {% else %}
                 {% for message in conversation.messages.all %}
-                    <div class="mb-10 {% if message.user.pk == user.pk %} self-end text-right {% endif%}">
+                    <div class="mb-10 {% if message.user.pk == user.pk %} self-end text-right {% endif %}">
                         <span class="font-medium text-gray-600">{{message.user.first_name}} {{message.user.last_name}} <span>
                         <div class="{% if message.user.pk != user.pk %} bg-teal-500 text-white {% else %} bg-gray-300 {% endif %}  bg-gray-300 w-56 p-3 rounded mt-px">{{message.message}}</div>
                     </div>

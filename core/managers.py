@@ -1,7 +1,7 @@
-from django.db import models
+from django.contrib.auth.models import BaseUserManager
 
 
-class CustomModelManager(models.Manager):
+class CustomModelManager(BaseUserManager):
     def get_or_none(self, **kargs):
         try:
             return self.get(**kargs)

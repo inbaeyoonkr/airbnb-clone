@@ -19,4 +19,10 @@ urlpatterns = [
     path("update-password/", views.UpdatePasswordView.as_view(), name="password"),
     path("switch-hosting/", views.switch_hosting, name="switch-hosting"),
     path("switch-language/", views.switch_language, name="switch-language"),
+    path("reservations/", views.SeeReservationsView.as_view(), name="reservations"),
+    path(
+        "host-rooms/reservations",
+        views.SeeHostRoomsReservations.as_view(),
+        name="host-rooms-reservations",
+    ),
 ]

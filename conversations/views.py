@@ -3,7 +3,7 @@ from django.views.generic import View
 from django.http import Http404
 from django.db.models import Q
 from users import models as user_models
-from . import models, forms
+from . import models
 
 
 def go_conversation(request, a_pk, b_pk):
@@ -17,6 +17,7 @@ def go_conversation(request, a_pk, b_pk):
         except models.Conversation.DoesNotExist:
             conversation = models.Conversation.objects.create()
             conversation.participants.add(user_one, user_two)
+
     return redirect(reverse("conversations:detail", kwargs={"pk": conversation.pk}))
 
 
