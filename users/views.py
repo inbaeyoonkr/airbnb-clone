@@ -307,6 +307,7 @@ class SeeReservationsView(ListView):
 
     user = models.User
     template_name = "reservations/reservation_list.html"
+
     def get(self, *args, **kwargs):
         user = self.request.user
         reservations = reservation_models.Reservation.objects.filter(guest__pk=user.pk)

@@ -12,8 +12,9 @@ def go_conversation(request, a_pk, b_pk):
     if user_one is not None and user_two is not None:
         try:
             conversation = models.Conversation.objects.get(
-                Q(participants=user_one) & Q(participants=user_two)
+                Q(participants=user_one) and Q(participants=user_two)
             )
+
         except models.Conversation.DoesNotExist:
             conversation = models.Conversation.objects.create()
             conversation.participants.add(user_one, user_two)
@@ -25,6 +26,7 @@ class ConversationDetail(View):
     def get(self, *args, **kwargs):
         pk = kwargs.get("pk")
         conversation = models.Conversation.objects.get_or_none(pk=pk)
+
         if conversation is None:
             raise Http404()
         return render(
