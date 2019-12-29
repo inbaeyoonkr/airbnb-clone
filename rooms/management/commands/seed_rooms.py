@@ -6,6 +6,18 @@ from rooms import models as room_models
 from users import models as user_models
 
 
+class Seed(Seed):
+    @classmethod
+    def faker(cls, locale=None, codename=None):
+        code = codename or cls.codename(locale)
+        if code not in cls.fakers:
+            from faker import Faker
+
+            cls.fakers[code] = Faker(locale)
+            cls.fakers[code].seed_instance(random.randint(1, 10000))
+        return cls.fakers[code]
+
+
 class Command(BaseCommand):
     help = "This command created rooms"
 

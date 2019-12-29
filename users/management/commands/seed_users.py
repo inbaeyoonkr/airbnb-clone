@@ -1,6 +1,19 @@
+import random
 from django.core.management.base import BaseCommand
 from django_seed import Seed
 from users.models import User
+
+
+class Seed(Seed):
+    @classmethod
+    def faker(cls, locale=None, codename=None):
+        code = codename or cls.codename(locale)
+        if code not in cls.fakers:
+            from faker import Faker
+
+            cls.fakers[code] = Faker(locale)
+            cls.fakers[code].seed_instance(random.randint(1, 10000))
+        return cls.fakers[code]
 
 
 class Command(BaseCommand):
