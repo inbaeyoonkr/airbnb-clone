@@ -14,7 +14,8 @@ django-countries = "*"
 django-seed = "*"
 django-dotenv = "*"
 requests = "*"
-psycopg2==2.8.4
+psycopg2= "==2.8.4"
+sentry-sdk = "==0.13.5"
 
 [requires]
 python_version = "3.7"
