@@ -22,13 +22,13 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
             "--number",
-            default=2,
+            default=50,
             type=int,
             help="How many users do you want to create?",
         )
 
     def handle(self, *args, **options):
-        seeder = Seed.seeder()
+        seeder = Seed.faker()
         number = options.get("number")
         seeder.add_entity(User, number, {"is_staff": False, "is_superuser": False})
         seeder.execute()
